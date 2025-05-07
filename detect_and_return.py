@@ -13,7 +13,7 @@ import os
 
 app = FastAPI()
 
-MODEL_PATH = r"C:\Users\metthier\Desktop\Prasit_Paisan\helmet_detection\detect_people_api\yolo12n.pt"
+MODEL_PATH = r"C:\Users\metthier\Desktop\Prasit_Paisan\helmet_detection\detect_people_api\yolo12s.pt"
 roi_points = [
     [268.23, 387.93],
     [1419.42, 260.64],
@@ -53,7 +53,7 @@ async def detect_stream(request: DetectionRequest):
             stream=True,
             save=False,
             show=False,
-            classes=0,
+            classes={0,1},
             conf=0.5,
             persist=True,
             tracker="bytetrack.yaml",
@@ -73,12 +73,19 @@ async def detect_stream(request: DetectionRequest):
                         continue
 
                     center = ((x1 + x2) // 2, (y1 + y2) // 2)
+
+                    cv2.rectangle(showframe, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                    cv2.putText(showframe, f"{class_name} ID:{track_id}", (x1, y1 - 10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+                    cv2.polylines(showframe, [roi_intrusion], isClosed=True, color=(0, 0, 255), thickness=2)
+
                     if cv2.pointPolygonTest(roi_intrusion, center, False) >= 0 and track_id not in tracked_ids:
                         tracked_ids.add(track_id)
                         crop = frame[y1:y2, x1:x2]
                         overview_image = encode_image_to_base64(showframe)
                         b64_image = encode_image_to_base64(crop)
                         timestamp = datetime.now().strftime("%H:%M:%S")
+                        cv2.imwrite('test2.jpg', showframe)
                         save_detection(crop, showframe, track_id=track_id, timestamp=timestamp)
                         data = {
                             "helmet_detection_log_uuid": str(uuid.uuid4()),

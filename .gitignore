@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pkl
+
+# VS Code
+.vscode/
+
+# Jupyter notebook checkpoint
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Virtual env
+venv/
+env/
+
+# Model weights
+*.pt
+*.h5
