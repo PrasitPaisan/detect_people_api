@@ -19,7 +19,10 @@ Thumbs.db
 # Virtual env
 venv/
 env/
+.env
 
 # Model weights
 *.pt
 *.h5
+
+app/models
