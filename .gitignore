@@ -25,5 +25,5 @@ env/
 *.pt
 *.h5
 
+app/models/
 cres
-app/models

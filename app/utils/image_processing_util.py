@@ -34,6 +34,7 @@ def find_closest_vehicle(person, vehicles, used_vehicle_ids, max_distance=200):
     p_center = (int((px1+px2)//2), int((py1+py2)//2))
 
     closest_vehicle = None
+    dist = None
     min_distance = float("inf")
 
     for vehicle in vehicles:
