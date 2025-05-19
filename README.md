@@ -1,4 +1,4 @@
-# 🛡️ Helmet Detection API (FastAPI)
+# 🛡️ Detect People API (FastAPI)
 
 ระบบตรวจจับบุคคลขับขี่มอเตอร์ไซค์ และจักรยาน พร้อมส่งภาพและข้อมูลการตรวจจับไปเก็บใน Google Cloud Storage ด้วย YOLO และ FastAPI
 
@@ -48,12 +48,13 @@ BUCKET_NAME=your-gcs-bucket-name
 
 
 ```
-# 1. cd helmet-detection-api
+### 1. เข้าถึง path ของ project
+cd human_body_detectio
 
-# 2. ติดตั้ง dependencies
+### 2. ติดตั้ง dependencies
 pip install -r requirements.txt
 
-# 3. รันเซิร์ฟเวอร์
+### 3. รันเซิร์ฟเวอร์
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
 ---
@@ -65,6 +66,7 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 {
   "video_path": "rtsp://<user>:<pass>@<ip>:<port>/path"
 }
+
 **response**
 data: {"snapshot": "...", "overview": "...", "overview_with_roi": "...", "timestamp": "..." }
 
