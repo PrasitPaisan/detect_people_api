@@ -25,6 +25,7 @@ env/
 *.pt
 *.h5
 
+app/models/*.json
 cres
 
 #docker
