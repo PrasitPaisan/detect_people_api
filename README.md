@@ -55,7 +55,7 @@ BUCKET_NAME=your-gcs-bucket-name
 
 1. Change to the project directory:
     ```sh
-    cd human_body_detectio
+    cd human_body_detection
     ```
 
 2. Install dependencies:
