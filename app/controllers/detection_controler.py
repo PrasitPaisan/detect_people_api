@@ -50,7 +50,7 @@ async def detect_stream(request: DetectionRequest):
             conf=0.5,
             persist=True,
             tracker="bytetrack.yaml",
-            verbose=False
+            verbose=True
         ):
             frame = results.orig_img
             showframe = frame.copy()

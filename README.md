@@ -1,72 +1,92 @@
-# 🛡️ Detect People API (FastAPI)
+# Detect People API (FastAPI)
 
-ระบบตรวจจับบุคคลขับขี่มอเตอร์ไซค์ และจักรยาน พร้อมส่งภาพและข้อมูลการตรวจจับไปเก็บใน Google Cloud Storage ด้วย YOLO และ FastAPI
-
----
-
-## 📦 Features
-
-- 🎥 รองรับการ Stream วิดีโอแบบ Real-time ผ่าน RTSP
-- 👤 ตรวจจับบุคคลที่ขับขี่มอเตอร์ไซค์ และจักรยานด้วย YOLO
-- 🧠 ตรวจสอบ attributes เช่น ใส่หมวกนิรภัย
-- 🖼️ บันทึก Snapshot, Overview Image และ Overview Image with ROI
-- ☁️ เชื่อมต่อและบันทึกภาพบน Google Cloud Storage
-- 🗃️ ส่ง path ของรูปภาพกลับไปยัง client เพื่อใช้งานต่อ
+A FastAPI-based system for detecting people riding motorcycles and bicycles. The system captures detection images and metadata, then uploads them to Google Cloud Storage using YOLO and ByteTrack.
 
 ---
 
-## 🚀 Tech Stack
+## Features
 
-- **Backend**: FastAPI  
-- **Model**: YOLOv12 
-- **Database**: PostgreSQL  
-- **Storage**: Google Cloud Storage (GCS)  
-- **Tracking**: ByteTrack  
-- **Libraries**: OpenCV, Requests, Numpy, Python-dotenv
+- Real-time video stream detection via RTSP
+- Detects people riding motorcycles and bicycles using YOLO
+- Attribute analysis (e.g., helmet detection)
+- Saves snapshot, overview, and overview-with-ROI images
+- Uploads images to Google Cloud Storage
+- Returns image paths and detection data to the client
 
 ---
 
-## 📂 Project Structure
+## Tech Stack
 
+- Backend: FastAPI
+- Model: YOLOv12
+- Database: PostgreSQL
+- Storage: Google Cloud Storage (GCS)
+- Tracking: ByteTrack
+- Libraries: OpenCV, Requests, Numpy, Python-dotenv
+
+---
+
+## Project Structure
+
+```
 app/
-├── controllers/ # FastAPI route handlers
-├── dbs/ # Database access layer
-├── models/ # Pydantic models for request/response
-├── utils/ # Helper functions (e.g. generate_data, save_image_to_googleStorage,. . .)
-main.py # Application entry point
+├── controllers/        # FastAPI route handlers
+├── dbs/                # Database access layer
+├── models/             # Pydantic models for request/response
+├── utils/              # Helper functions (e.g., generate_data, save_image_to_googleStorage, ...)
+main.py                 # Application entry point
+```
 
 ---
 
-## ⚙️ Environment Variables
+## Environment Variables
 
-สร้างไฟล์ `.env` และตั้งค่าดังนี้:
+Create a `.env` file in the project root with the following content:
 
 ```env
 MODEL_PATH=model/best.pt
 PRIVATE_KEY=path/to/your-google-service-key.json
 BUCKET_NAME=your-gcs-bucket-name
-
-
 ```
-### 1. เข้าถึง path ของ project
-cd human_body_detectio
-
-### 2. ติดตั้ง dependencies
-pip install -r requirements.txt
-
-### 3. รันเซิร์ฟเวอร์
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
 ---
 
-## Example API
- 📡 POST `/api/detect/stream`
+## Getting Started
 
-**input**
+1. Change to the project directory:
+    ```sh
+    cd human_body_detectio
+    ```
+
+2. Install dependencies:
+    ```sh
+    pip install -r requirements.txt
+    ```
+
+3. Run the server:
+    ```sh
+    uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    ```
+
+---
+
+## Example API Usage
+
+**POST** `/api/detect/stream`
+
+**Request Body**
+```json
 {
   "video_path": "rtsp://<user>:<pass>@<ip>:<port>/path"
 }
+```
 
-**response**
-data: {"snapshot": "...", "overview": "...", "overview_with_roi": "...", "timestamp": "..." }
-
+**Response**
+```json
+{
+  "snapshot": "...",
+  "overview": "...",
+  "overview_with_roi": "...",
+  "timestamp": "..."
+}
+```
